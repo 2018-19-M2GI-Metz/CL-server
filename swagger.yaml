@@ -13,110 +13,145 @@ info:
 
 # tags are used for organizing operations
 tags:
-- name: admins
-  description: Secured Admin-only calls
-- name: developers
-  description: Operations available to regular developers
+- name: michel
+  description: MichelAPI to find shortest way in life
+
+# Get nearest registered coord from point => {x, y}
+# Get Compute shortest path between two points => [city1, city2, ...]
+# Get Compute shortest path, passing by all city provided (TSP) => [city1, city2, ...]
+# Post new city
+# Delete a city
 
 paths:
-  /inventory:
+  /nearestpoint:
     get:
+      summary: Get nearest registred point
       tags:
-      - developers
-      summary: searches inventory
-      operationId: searchInventory
+        - michel
+      operationId:
       description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
+        By passing some coordinate, it will retrieve the nearest registred
+        place in database
       produces:
       - application/json
       parameters:
       - in: query
-        name: searchString
-        description: pass an optional search string for looking up inventory
-        required: false
-        type: string
+        name: lat
+        description: Provided latitude
+        required: true
+        type: number
       - in: query
-        name: skip
-        description: number of records to skip for pagination
-        type: integer
-        format: int32
+        name: lon
+        description: Provided longitude
+        required: true
+        type: number
         minimum: 0
-      - in: query
-        name: limit
-        description: maximum number of records to return
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 50
       responses:
         200:
-          description: search results matching criteria
+          description: Nearest point successfully searched
+          schema:
+            $ref: '#/definitions/Place'
+        400:
+          description: Bad input parameter
+
+  /path:
+    get:
+      summary: Compute and get the shortest path between two places
+      tags:
+        - michel
+      operationId:
+      description: |
+        By passing start and end coordinates, it will compute the shortest path between
+        this 2 places
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: startLat
+        description: Provided latitude
+        required: true
+        type: number
+      - in: query
+        name: startLon
+        description: Provided longitude
+        required: true
+        type: number
+      - in: query
+        name: endLat
+        description: Provided latitude
+        required: true
+        type: number
+      - in: query
+        name: endLon
+        description: Provided longitude
+        required: true
+        type: number
+      responses:
+        200:
+          description: A list of paths to starting place to ending place
           schema:
             type: array
             items:
-              $ref: '#/definitions/InventoryItem'
+              $ref: '#/definitions/Path'
         400:
-          description: bad input parameter
-    post:
+          description: Bad input parameter
+
+  /tsp:
+    get:
+      summary: Resolve the Traveller Saleman Problem.
       tags:
-      - admins
-      summary: adds an inventory item
-      operationId: addInventory
-      description: Adds an item to the system
-      consumes:
-      - application/json
+        - michel
+      operationId:
+      description:
       produces:
       - application/json
       parameters:
-      - in: body
-        name: inventoryItem
-        description: Inventory item to add
+      - in: query
+        name: places
+        description: List of place id to compute
+        required: true
         schema:
-          $ref: '#/definitions/InventoryItem'
+          type: array
+          items: number
       responses:
-        201:
-          description: item created
+        200:
+          description: The ordonnated list of Place id you have to travel
+          schema:
+            type: array
+            items:
+              type: integer
         400:
-          description: invalid input, object invalid
-        409:
-          description: an existing item already exists
+          description: Bad input parameter
+
 definitions:
-  InventoryItem:
+  Place:
     type: object
-    required:
-    - id
-    - name
-    - manufacturer
-    - releaseDate
     properties:
       id:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      name:
-        type: string
-        example: Widget Adapter
-      releaseDate:
-        type: string
-        format: date-time
-        example: 2016-08-29T09:12:33.001Z
-      manufacturer:
-        $ref: '#/definitions/Manufacturer'
-  Manufacturer:
+        type: integer
+        example: 1
+      lat:
+        type: number
+        example: 12.32203
+      long:
+        type: number
+        example: 362.91004
     required:
-    - name
+      - id
+      - lat
+      - long
+
+  Path:
+    type: object
     properties:
-      name:
-        type: string
-        example: ACME Corporation
-      homePage:
-        type: string
-        format: url
-        example:  https://www.acme-corp.com
-      phone:
-        type: string
-        example: 408-867-5309
+      start:
+        $ref: '#/definitions/Place'
+      end:
+        $ref: '#/definitions/Place'
+    required:
+      - start
+      - end
+
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
 basePath: /univ-lorraine/CL-Michel/1.0.0
