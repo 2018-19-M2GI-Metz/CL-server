@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
@@ -28,21 +29,34 @@ public class DirectionController
     this.directionService = directionService;
   }
 
-  @GetMapping("/shortestPath")
-  public List<Path> getShortestPath(double startPosX, double startPosY,
-                                    double endPosX, double endPosY)
+  @GetMapping("/path")
+  @ApiOperation(value = "Gets the shortest path between two points", nickname = "ShortestPath",
+      tags={ "MapAPI" })
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Success") })
+  public List<Path> getShortestPath(long startId, long endId)
   {
-    return directionService.getShortestPath(new Place(startPosX, startPosY),
-        new Place(endPosX, endPosY));
+    logger.info("Getting shortest path with startId = {} and endId = {}", startId, endId);
+    return directionService.getShortestPath(startId,endId);
   }
 
   @GetMapping("/tsp")
-  @ApiOperation(value = "Do the tsp", nickname = "TSP", tags={ "Beers" })
+  @ApiOperation(value = "Do the tsp", nickname = "TSP", tags={ "MapAPI" })
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success") })
-  public List<Path> getTravelingSalesMan(List<Place> places)
+  public List<Path> getTravelingSalesMan(@RequestParam("id")  List<Integer> idPlaces)
   {
-    logger.info("{}", places);
+    logger.info("Ids = {}", idPlaces);
     return directionService.getTravelingSalesMan(Collections.emptySet());
+  }
+
+  @GetMapping("/nearestpoint")
+  @ApiOperation(value = "Gets the nearest point", nickname = "Nearest Point", tags={ "MapAPI" })
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Success") })
+  public Place getNearestPoint(double lat, double lon)
+  {
+    logger.info("Getting nearest point for lat = {} and long = {}", lat, lon);
+    return null;
   }
 }

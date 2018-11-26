@@ -119,7 +119,7 @@ definitions:
         type: integer
         example: 1
       lat:
-        type: number
+        type: numberx
         example: 12.32203
       long:
         type: number
