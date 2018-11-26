@@ -1,20 +1,18 @@
 swagger: '2.0'
 info:
-  description: This is a Michel API
+  description: The API to the best map application in the world.
   version: 1.0.0
   title: Michel API
-  # put the contact info for your development or API team
   contact:
-    email: michel@lamiche.com
+    email: m2-gi@univ-lorraine.fr
 
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 
-# tags are used for organizing operations
 tags:
-- name: michel
-  description: MichelAPI to find shortest way in life
+- name: MichelMapsAPI
+  description: The API to the best map application in the world.
 
 # Get nearest registered coord from point => {x, y}
 # Get Compute shortest path between two points => [city1, city2, ...]
@@ -23,105 +21,95 @@ tags:
 # Delete a city
 
 paths:
-  /nearestpoint:
-    get:
-      summary: Get nearest registred point
-      tags:
-        - michel
-      operationId:
-      description: |
-        By passing some coordinate, it will retrieve the nearest registred
-        place in database
-      produces:
-      - application/json
-      parameters:
-      - in: query
-        name: lat
-        description: Provided latitude
-        required: true
-        type: number
-      - in: query
-        name: lon
-        description: Provided longitude
-        required: true
-        type: number
-        minimum: 0
-      responses:
-        200:
-          description: Nearest point successfully searched
-          schema:
-            $ref: '#/definitions/Place'
-        400:
-          description: Bad input parameter
+    /nearestpoint:
+      get:
+        summary: Get nearest registred point
+        tags:
+          - MichelMapsAPI
+        operationId:
+        description: |
+          By passing some coordinate, it will retrieve the nearest registred
+          place in database
+        produces:
+        - application/json
+        parameters:
+        - in: query
+          name: lat
+          description: Provided latitude
+          required: true
+          type: number
+        - in: query
+          name: lon
+          description: Provided longitude
+          required: true
+          type: number
+          minimum: 0
+        responses:
+          200:
+            description: Nearest point successfully searched
+            schema:
+              $ref: '#/definitions/Place'
+          400:
+            description: Bad input parameter
 
-  /path:
-    get:
-      summary: Compute and get the shortest path between two places
-      tags:
-        - michel
-      operationId:
-      description: |
-        By passing start and end coordinates, it will compute the shortest path between
-        this 2 places
-      produces:
-      - application/json
-      parameters:
-      - in: query
-        name: startLat
-        description: Provided latitude
-        required: true
-        type: number
-      - in: query
-        name: startLon
-        description: Provided longitude
-        required: true
-        type: number
-      - in: query
-        name: endLat
-        description: Provided latitude
-        required: true
-        type: number
-      - in: query
-        name: endLon
-        description: Provided longitude
-        required: true
-        type: number
-      responses:
-        200:
-          description: A list of paths to starting place to ending place
+    /path:
+      get:
+        summary: Compute and get the shortest path between two places
+        tags:
+          - MichelMapsAPI
+        operationId:
+        description: |
+          By passing start and end coordinates, it will compute the shortest path between
+          this 2 places
+        produces:
+        - application/json
+        parameters:
+        - in: query
+          name: idStart
+          description: The id of the starting point
+          required: true
+          type: integer
+        - in: query
+          name: idEnd
+          description: The id of the end point
+          required: true
+          type: integer
+        responses:
+          200:
+            description: A list of paths to starting place to ending place
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Path'
+          400:
+            description: Bad input parameter
+
+    /tsp:
+      get:
+        summary: Resolve the Traveller Saleman Problem.
+        tags:
+          - MichelMapsAPI
+        operationId:
+        description:
+        produces:
+        - application/json
+        parameters:
+        - in: query
+          name: places
+          description: List of place id to compute
+          required: true
           schema:
             type: array
-            items:
-              $ref: '#/definitions/Path'
-        400:
-          description: Bad input parameter
-
-  /tsp:
-    get:
-      summary: Resolve the Traveller Saleman Problem.
-      tags:
-        - michel
-      operationId:
-      description:
-      produces:
-      - application/json
-      parameters:
-      - in: query
-        name: places
-        description: List of place id to compute
-        required: true
-        schema:
-          type: array
-          items: number
-      responses:
-        200:
-          description: The ordonnated list of Place id you have to travel
-          schema:
-            type: array
-            items:
-              type: integer
-        400:
-          description: Bad input parameter
+            items: number
+        responses:
+          200:
+            description: The ordonnated list of Place id you have to travel
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Path'
+          400:
+            description: Bad input parameter
 
 definitions:
   Place:

@@ -2,7 +2,6 @@ package fr.mim.cl.server.services;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -14,14 +13,8 @@ import fr.mim.cl.server.model.Place;
 public class JniDirectionService implements DirectionService
 {
   @Override
-  public List<Path> getShortestPath(Place startPlace, Place endPlace)
-  {
-    return Collections.emptyList();
-  }
+  public native List<Path> getShortestPath(Place startPlace, Place endPlace);
 
   @Override
-  public List<Path> getTravelingSalesMan(Set<Place> places)
-  {
-    return Collections.emptyList();
-  }
+  public native List<Path> getTravelingSalesMan(Set<Place> places);
 }
