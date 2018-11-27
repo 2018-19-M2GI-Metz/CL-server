@@ -57,6 +57,6 @@ public class DirectionController
   public Place getNearestPoint(double lat, double lon)
   {
     logger.info("Getting nearest point for lat = {} and long = {}", lat, lon);
-    return null;
+    return directionService.getNearestPoint(lat, lon);
   }
 }

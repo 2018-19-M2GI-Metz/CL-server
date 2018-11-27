@@ -15,7 +15,7 @@ import fr.mim.cl.server.model.Place;
 public class JniDirectionService implements DirectionService
 {
   static {
-    System.loadLibrary("test");
+    System.loadLibrary("map");
   }
 
   @Override
