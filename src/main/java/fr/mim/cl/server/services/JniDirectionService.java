@@ -14,6 +14,10 @@ import fr.mim.cl.server.model.Place;
 @Profile("prod")
 public class JniDirectionService implements DirectionService
 {
+  static {
+    System.loadLibrary("test");
+  }
+
   @Override
   public native List<Path> getShortestPath(long startId, long endId);
 
