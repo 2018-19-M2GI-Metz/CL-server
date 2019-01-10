@@ -11,4 +11,5 @@ public interface DirectionService
   List<Path> getShortestPath(long startId, long endIdp);
   List<Path> getTravelingSalesMan(Set<Place> places);
   Place getNearestPoint(double lat, double lon);
+  List<Place> searchPlacesByName(String name);
 }

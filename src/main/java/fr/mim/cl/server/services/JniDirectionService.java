@@ -26,4 +26,7 @@ public class JniDirectionService implements DirectionService
 
   @Override
   public native Place getNearestPoint(double lat, double lon);
+
+  @Override
+  public native List<Place> searchPlacesByName(String name);
 }

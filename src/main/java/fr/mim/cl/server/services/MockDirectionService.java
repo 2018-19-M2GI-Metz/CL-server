@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,15 @@ public class MockDirectionService implements DirectionService
   public Place getNearestPoint(double lat, double lon)
   {
     logger.info("Mocking getNearestPoint");
-    return new Place(lat, lon);
+    return new Place(1, "Metz", lat, lon);
+  }
+
+  @Override
+  public List<Place> searchPlacesByName(String name)
+  {
+    List<Place> placeList = new ArrayList<>();
+    placeList.add(new Place(1, "Metz", 3.1, 3.4));
+    placeList.add(new Place(2, "Nancy", 9.4, 8.5));
+    return placeList;
   }
 }

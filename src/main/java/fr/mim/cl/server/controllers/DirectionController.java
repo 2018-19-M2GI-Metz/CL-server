@@ -59,4 +59,14 @@ public class DirectionController
     logger.info("Getting nearest point for lat = {} and long = {}", lat, lon);
     return directionService.getNearestPoint(lat, lon);
   }
+
+  @GetMapping("/searchbyname")
+  @ApiOperation(value = "Search places by a name or a part of the name", nickname = "Search by name", tags={ "MapAPI" })
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Success") })
+  public List<Place> searchPlacesByName(String name)
+  {
+    logger.info("Searching places with name {}", name);
+    return directionService.searchPlacesByName(name);
+  }
 }
