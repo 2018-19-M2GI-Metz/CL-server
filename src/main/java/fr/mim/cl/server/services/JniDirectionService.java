@@ -22,7 +22,7 @@ public class JniDirectionService implements DirectionService
   public native List<Path> getShortestPath(long startId, long endId);
 
   @Override
-  public native List<Path> getTravelingSalesMan(Set<Place> places);
+  public native List<Path> getTravelingSalesMan(Set<Integer> places);
 
   @Override
   public native Place getNearestPoint(double lat, double lon);

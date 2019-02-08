@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class MockDirectionService implements DirectionService
   }
 
   @Override
-  public List<Path> getTravelingSalesMan(Set<Place> places)
+  public List<Path> getTravelingSalesMan(Set<Integer> places)
   {
     logger.info("Mocking getTsp");
     Place metz = new Place(1, "Metz", 3.1, 3.4);
