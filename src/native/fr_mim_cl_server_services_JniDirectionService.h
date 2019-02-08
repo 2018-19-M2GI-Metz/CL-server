@@ -31,6 +31,14 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
 JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getNearestPoint
   (JNIEnv *, jobject, jdouble, jdouble);
 
+/*
+ * Class:     fr_mim_cl_server_services_JniDirectionService
+ * Method:    searchPlacesByName
+ * Signature: (Ljava/lang/String;)Ljava/util/List;
+ */
+JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_searchPlacesByName
+  (JNIEnv *, jobject, jstring);
+
 #ifdef __cplusplus
 }
 #endif
