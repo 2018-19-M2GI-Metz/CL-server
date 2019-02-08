@@ -23,14 +23,29 @@ public class MockDirectionService implements DirectionService
   public List<Path> getShortestPath(long startId, long endIdp)
   {
     logger.info("Mocking getShortestPath");
-    return Collections.emptyList();
+    Place metz = new Place(1, "Metz", 3.1, 3.4);
+    Place nancy = new Place(2, "Nancy", 5.1, 9.4);
+    Place paris = new Place(3, "Paris", 34, 1);
+
+    List<Path> res = new ArrayList<>();
+    res.add(new Path(metz, nancy));
+    res.add(new Path(nancy, paris));
+    return res;
   }
 
   @Override
   public List<Path> getTravelingSalesMan(Set<Place> places)
   {
     logger.info("Mocking getTsp");
-    return Collections.emptyList();
+    Place metz = new Place(1, "Metz", 3.1, 3.4);
+    Place nancy = new Place(2, "Nancy", 5.1, 9.4);
+    Place paris = new Place(3, "Paris", 34, 1);
+
+    List<Path> res = new ArrayList<>();
+    res.add(new Path(metz, nancy));
+    res.add(new Path(nancy, paris));
+    res.add(new Path(paris, metz));
+    return res;
   }
 
   @Override
