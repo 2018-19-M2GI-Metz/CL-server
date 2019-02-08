@@ -4,4 +4,4 @@ class Path {
     public:
         Place start;
         Place end;
-}
+};

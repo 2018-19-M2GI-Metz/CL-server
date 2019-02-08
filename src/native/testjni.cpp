@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <iostream>
 #include "fr_mim_cl_server_services_JniDirectionService.h"
+#include "CppToJavaConverter.h"
 
 
 /*
@@ -40,12 +41,12 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
     std::cout << "Native call to getShortestPath" << std::endl;
     
     jclass arrayListClass = env->FindClass("java/util/ArrayList");
-    jclass placeClass = env->FindClass("fr/mim/cl/server/model/Place");
+    //jclass placeClass = env->FindClass("fr/mim/cl/server/model/Place");
     jclass pathClass = env->FindClass("fr/mim/cl/server/model/Path");
 
 
     jmethodID arrayListConstructor = env->GetMethodID(arrayListClass,"<init>", "()V");
-    jmethodID placeConstructor = env->GetMethodID(placeClass, "<init>", "(DD)V");
+    //jmethodID placeConstructor = env->GetMethodID(placeClass, "<init>", "(DD)V");
     jmethodID pathConstructor = env->GetMethodID(pathClass, "<init>", "()V");
     jmethodID addStartPlaceToPath = env->GetMethodID(pathClass, "setStartPlace", "(Lfr/mim/cl/server/model/Place;)V");
     jmethodID addEndPlaceToPath = env->GetMethodID(pathClass, "setEndPlace", "(Lfr/mim/cl/server/model/Place;)V");
@@ -61,8 +62,10 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
       std::cout << "arrayList created with constructor" << std::endl;
 
     // Creating the Place objects.
-    jobject placeObject1 = env->NewObject(placeClass, placeConstructor, (jdouble) 12, (jdouble) 34);
-    jobject placeObject2 = env->NewObject(placeClass, placeConstructor, 19, 24);
+    //jobject placeObject1 = env->NewObject(placeClass, placeConstructor, (jdouble) 12, (jdouble) 34);
+    //jobject placeObject2 = env->NewObject(placeClass, placeConstructor, 19, 24);
+    jobject placeObject1 = CppToJavaConverter::createPlace(new Place(1, "test", 10, 20), env);
+    jobject placeObject2 = CppToJavaConverter::createPlace(new Place(1, "test", 10, 30), env);
 
     // Create the Path object.
     jobject pathObject = env->NewObject(pathClass, pathConstructor, placeObject1, placeObject2);
