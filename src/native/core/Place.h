@@ -1,5 +1,4 @@
-#if !defined(PLACE)
-#define PLACE
+#pragma once
 
 #include <string>
 
@@ -13,12 +12,3 @@ class Place {
         double y;
         Place(int id, string name, double x, double y);
 };
-
-Place::Place(int id, string name, double x, double y) {
-    this->id = id;
-    this->name = name;
-    this->x = x;
-    this->y = y;
-}
-
-#endif // PLACE

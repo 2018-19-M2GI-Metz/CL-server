@@ -6,4 +6,4 @@ javac -h src/native/ -classpath ~/.m2/repository/org/springframework/spring-cont
 
 echo 'Compiling the library.';
 
-g++ -fPIC -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/linux" -shared -o lib/libmap.so src/native/testjni.cpp
+g++ -fPIC -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/linux" -shared -o lib/libmap.so src/native/*.cpp src/native/core/*.cpp

@@ -51,3 +51,7 @@ You can then execute it with
 `java -Djava.library.path=/path/to/the/library/ -jar server-X.X.X-SNAPSHOT.jar`.
 
 The `-Djava.library.path` is used to specify the directory which contains the library.
+
+# Calling java methods from C++
+
+You need to get the descriptor string of the method. You can get it easily with `javap -s -p target/my/compiled/class`.

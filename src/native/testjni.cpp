@@ -64,8 +64,12 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
     // Creating the Place objects.
     //jobject placeObject1 = env->NewObject(placeClass, placeConstructor, (jdouble) 12, (jdouble) 34);
     //jobject placeObject2 = env->NewObject(placeClass, placeConstructor, 19, 24);
-    jobject placeObject1 = CppToJavaConverter::createPlace(new Place(1, "test", 10, 20), env);
-    jobject placeObject2 = CppToJavaConverter::createPlace(new Place(1, "test", 10, 30), env);
+    Place* place1 = new Place(1, "test", 10, 20);
+    Place* place2 = new Place(1, "test", 10, 30);
+    std::cout << "Before create place" << std::endl;
+    jobject placeObject1 = CppToJavaConverter::createPlace(place1, env);
+    jobject placeObject2 = CppToJavaConverter::createPlace(place2, env);
+    std::cout << "After create place" << std::endl;
 
     // Create the Path object.
     jobject pathObject = env->NewObject(pathClass, pathConstructor, placeObject1, placeObject2);

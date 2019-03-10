@@ -1,3 +1,5 @@
+#pragma once
+
 #include <jni.h>
 #include <iostream>
 #include <vector>
@@ -12,4 +14,4 @@ class CppToJavaConverter {
         static jobject createArrayListOfPlace(vector<Place> placeList, JNIEnv * env);
         static jobject createPlace(Place* place, JNIEnv * env);
         static jobject createPath(Path* path, JNIEnv * env);
-}
+};
