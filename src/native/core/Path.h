@@ -4,4 +4,5 @@ class Path {
     public:
         Place start;
         Place end;
+        Path(Place start, Place end);
 };

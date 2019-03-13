@@ -12,22 +12,8 @@
 JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getNearestPoint
   (JNIEnv * env, jobject, jdouble lat, jdouble lon)
   {
-      std::cout << "Getting native nearest point" << std::endl;
-      jclass jcls = env->FindClass("fr/mim/cl/server/model/Place");
-      /*jobject jobj = env->AllocObject(jcls);
-      if (jobj == NULL)
-        std::cout << "Object cannot be created" << std::endl;
-      else
-        std::cout << "Object created" << std::endl;
-      return jobj; */
-      jmethodID mID1 = env->GetMethodID(jcls,"<init>", "(DD)V");
-      jobject jobj2 = env->NewObject(jcls, mID1, lat, lon);
-      if (jobj2 == NULL)
-         std::cout << "Object cannot be created with constructor" << std::endl;
-      else
-         std::cout << "Object created with constructor" << std::endl;
-      return jobj2;
-
+      Place place = Place(1, "Metz", lat, lon);
+      return CppToJavaConverter::createPlace(place, env);std::cout << "Getting native nearest point" << std::endl;
   }
 
 /*
@@ -39,22 +25,13 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
   (JNIEnv * env, jobject, jlong, jlong)
   {
     std::cout << "Native call to getShortestPath" << std::endl;
-    
-    jclass arrayListClass = env->FindClass("java/util/ArrayList");
-    //jclass placeClass = env->FindClass("fr/mim/cl/server/model/Place");
-    jclass pathClass = env->FindClass("fr/mim/cl/server/model/Path");
 
-
-    jmethodID arrayListConstructor = env->GetMethodID(arrayListClass,"<init>", "()V");
-    //jmethodID placeConstructor = env->GetMethodID(placeClass, "<init>", "(DD)V");
-    jmethodID pathConstructor = env->GetMethodID(pathClass, "<init>", "()V");
+    /* jmethodID pathConstructor = env->GetMethodID(pathClass, "<init>", "()V");
     jmethodID addStartPlaceToPath = env->GetMethodID(pathClass, "setStartPlace", "(Lfr/mim/cl/server/model/Place;)V");
     jmethodID addEndPlaceToPath = env->GetMethodID(pathClass, "setEndPlace", "(Lfr/mim/cl/server/model/Place;)V");
-    jmethodID pathConstructor2 = env->GetMethodID(pathClass, "<init>", "(Lfr/mim/cl/server/model/Place;Lfr/mim/cl/server/model/Place;)V");
-    jmethodID addToArrayList = env->GetMethodID(arrayListClass, "add", "(Ljava/lang/Object;)Z");
+    jmethodID pathConstructor2 = env->GetMethodID(pathClass, "<init>", "(Lfr/mim/cl/server/model/Place;Lfr/mim/cl/server/model/Place;)V"); */
     
-    // Create ArrayList
-    jobject arrayList = env->NewObject(arrayListClass, arrayListConstructor);
+    
 
     if (arrayList == NULL)
       std::cout << "arrayList cannot be created with constructor" << std::endl;
@@ -62,29 +39,31 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
       std::cout << "arrayList created with constructor" << std::endl;
 
     // Creating the Place objects.
-    //jobject placeObject1 = env->NewObject(placeClass, placeConstructor, (jdouble) 12, (jdouble) 34);
-    //jobject placeObject2 = env->NewObject(placeClass, placeConstructor, 19, 24);
-    Place* place1 = new Place(1, "test", 10, 20);
-    Place* place2 = new Place(1, "test", 10, 30);
-    std::cout << "Before create place" << std::endl;
+    Place place1 = Place(1, "test", 10, 20);
+    Place place2 = Place(1, "test 2", 10, 30);
+  
     jobject placeObject1 = CppToJavaConverter::createPlace(place1, env);
     jobject placeObject2 = CppToJavaConverter::createPlace(place2, env);
-    std::cout << "After create place" << std::endl;
+
+    std::cout << "Created places" << std::endl;
+  
 
     // Create the Path object.
-    jobject pathObject = env->NewObject(pathClass, pathConstructor, placeObject1, placeObject2);
+    //jobject pathObject = env->NewObject(pathClass, pathConstructor, placeObject1, placeObject2);
+    Path path = Path(place1, place2);
+    std::cout << path.start.name << " & " << path.end.name << std::endl;
+    jobject pathObject = CppToJavaConverter::createPath(path, env);
 
     if (pathObject == NULL)
       std::cout << "pathObject cannot be created with constructor" << std::endl;
     else
       std::cout << "pathObject created with constructor" << std::endl;
     
-    env->CallVoidMethod(pathObject, addStartPlaceToPath, placeObject1);
-    env->CallVoidMethod(pathObject, addEndPlaceToPath, placeObject2);
     env->CallObjectMethod(arrayList, addToArrayList, pathObject);
     env->CallObjectMethod(arrayList, addToArrayList, pathObject);
     env->CallObjectMethod(arrayList, addToArrayList, pathObject);
 
+    std::cout << "Returning the arraylist" << std::endl;
     return arrayList;
   }
 

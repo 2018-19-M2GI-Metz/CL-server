@@ -6,3 +6,5 @@ Place::Place(int id, string name, double x, double y) {
     this->x = x;
     this->y = y;
 }
+
+Place::Place() {}

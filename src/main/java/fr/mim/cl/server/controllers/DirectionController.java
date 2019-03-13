@@ -37,7 +37,9 @@ public class DirectionController
   public List<Path> getShortestPath(long startId, long endId)
   {
     logger.info("Getting shortest path with startId = {} and endId = {}", startId, endId);
-    return directionService.getShortestPath(startId,endId);
+    List<Path> pathList = directionService.getShortestPath(startId,endId);
+    logger.info("Path returned are : {}", pathList);
+    return pathList;
   }
 
   @GetMapping("/tsp")
