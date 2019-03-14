@@ -10,17 +10,17 @@ jobject CppToJavaConverter::createPlace(shared_ptr<Point> place, JNIEnv *env)
     return placeObject;
 }
 
-jobject CppToJavaConverter::createPath(shared_ptr<Path> path, JNIEnv *env)
+jobject CppToJavaConverter::createPath(shared_ptr<Segment> path, JNIEnv *env)
 {
-   /*  jclass pathClass = env->FindClass("fr/mim/cl/server/model/Path");
+    jclass pathClass = env->FindClass("fr/mim/cl/server/model/Path");
     jmethodID pathConstructor = env->GetMethodID(pathClass, "<init>", "(Lfr/mim/cl/server/model/Place;Lfr/mim/cl/server/model/Place;)V");
 
-    jobject startPlace = createPlace(path.start, env);
-    jobject endPlace = createPlace(path.end, env);
+    jobject startPlace = createPlace(path->getStartPoint(), env);
+    jobject endPlace = createPlace(path->getEndPoint(), env);
 
     jobject pathObject = env->NewObject(pathClass, pathConstructor, startPlace, endPlace);
 
-    return pathObject; */
+    return pathObject;
 }
 
 jobject CppToJavaConverter::createArrayListOfPlace(vector<shared_ptr<Point>> placeList, JNIEnv *env)
@@ -39,7 +39,7 @@ jobject CppToJavaConverter::createArrayListOfPlace(vector<shared_ptr<Point>> pla
     return arrayList;
 }
 
-jobject CppToJavaConverter::createArrayListOfPath(vector<shared_ptr<Path>> pathList, JNIEnv *env)
+jobject CppToJavaConverter::createArrayListOfPath(vector<shared_ptr<Segment>> pathList, JNIEnv *env)
 {
     jclass arrayListClass = env->FindClass("java/util/ArrayList");
     jmethodID arrayListConstructor = env->GetMethodID(arrayListClass, "<init>", "()V");
