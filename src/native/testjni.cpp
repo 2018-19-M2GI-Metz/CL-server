@@ -2,6 +2,7 @@
 #include <iostream>
 #include "fr_mim_cl_server_services_JniDirectionService.h"
 #include "CppToJavaConverter.h"
+#include "../../core/src/core/API/interface.hpp"
 
 /*
  * Class:     fr_mim_cl_server_services_JniDirectionService
@@ -10,8 +11,8 @@
  */
 JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getNearestPoint(JNIEnv *env, jobject, jdouble lat, jdouble lon)
 {
-  Place place = Place(1, "Metz", lat, lon);
-  return CppToJavaConverter::createPlace(place, env);
+  /* Place place = Place(1, "Metz", lat, lon);
+  return CppToJavaConverter::createPlace(place, env); */
 }
 
 /*
@@ -21,7 +22,7 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
  */
 JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getShortestPath(JNIEnv *env, jobject, jlong, jlong)
 {
-  Place place1 = Place(1, "test", 10, 20);
+/*   Place place1 = Place(1, "test", 10, 20);
   Place place2 = Place(1, "test 2", 10, 30);
   Path path = Path(place1, place2);
 
@@ -29,7 +30,7 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
   pathList.push_back(path);
   pathList.push_back(path);
 
-  return CppToJavaConverter::createArrayListOfPath(pathList, env);
+  return CppToJavaConverter::createArrayListOfPath(pathList, env); */
 }
 
 /*
@@ -39,7 +40,7 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
  */
 JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getTravelingSalesMan(JNIEnv *env, jobject, jobject)
 {
-  Place place1 = Place(1, "Metz", 10, 20);
+  /* Place place1 = Place(1, "Metz", 10, 20);
   Place place2 = Place(1, "Nancy", 10, 30);
   Path path = Path(place1, place2);
 
@@ -47,17 +48,19 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
   pathList.push_back(path);
   pathList.push_back(path);
 
-  return CppToJavaConverter::createArrayListOfPath(pathList, env);
+  return CppToJavaConverter::createArrayListOfPath(pathList, env); */
 }
 
 JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_searchPlacesByName(JNIEnv *env, jobject, jstring)
 {
-  Place place1 = Place(1, "Metz", 10, 20);
+  /* Place place1 = Place(1, "Metz", 10, 20);
   Place place2 = Place(1, "Nancy", 10, 30);
 
   std::vector<Place> placeList;
   placeList.push_back(place1);
-  placeList.push_back(place2);
+  placeList.push_back(place2); */
 
-  return CppToJavaConverter::createArrayListOfPlace(placeList, env);
+  auto placeVector = searchPlace("Metz");
+
+  return CppToJavaConverter::createArrayListOfPlace(placeVector, env);
 }

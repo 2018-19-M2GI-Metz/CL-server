@@ -1,18 +1,18 @@
 #include "CppToJavaConverter.h"
 #include <jni.h>
 
-jobject CppToJavaConverter::createPlace(Place place, JNIEnv *env)
+jobject CppToJavaConverter::createPlace(shared_ptr<Point> place, JNIEnv *env)
 {
     jclass placeClass = env->FindClass("fr/mim/cl/server/model/Place");
     jmethodID placeConstructor = env->GetMethodID(placeClass, "<init>", "(JLjava/lang/String;DD)V");
-    jobject placeObject = env->NewObject(placeClass, placeConstructor, (jint)place.id, env->NewStringUTF(place.name.c_str()), (jdouble)place.x, (jdouble)place.y);
+    jobject placeObject = env->NewObject(placeClass, placeConstructor, (jint)place->getId(), env->NewStringUTF(place->getName().c_str()), (jdouble)place->getLatitude(), (jdouble)place->getLongitude());
 
     return placeObject;
 }
 
-jobject CppToJavaConverter::createPath(Path path, JNIEnv *env)
+jobject CppToJavaConverter::createPath(shared_ptr<Path> path, JNIEnv *env)
 {
-    jclass pathClass = env->FindClass("fr/mim/cl/server/model/Path");
+   /*  jclass pathClass = env->FindClass("fr/mim/cl/server/model/Path");
     jmethodID pathConstructor = env->GetMethodID(pathClass, "<init>", "(Lfr/mim/cl/server/model/Place;Lfr/mim/cl/server/model/Place;)V");
 
     jobject startPlace = createPlace(path.start, env);
@@ -20,10 +20,10 @@ jobject CppToJavaConverter::createPath(Path path, JNIEnv *env)
 
     jobject pathObject = env->NewObject(pathClass, pathConstructor, startPlace, endPlace);
 
-    return pathObject;
+    return pathObject; */
 }
 
-jobject CppToJavaConverter::createArrayListOfPlace(vector<Place> placeList, JNIEnv *env)
+jobject CppToJavaConverter::createArrayListOfPlace(vector<shared_ptr<Point>> placeList, JNIEnv *env)
 {
     jclass arrayListClass = env->FindClass("java/util/ArrayList");
     jmethodID arrayListConstructor = env->GetMethodID(arrayListClass, "<init>", "()V");
@@ -31,7 +31,7 @@ jobject CppToJavaConverter::createArrayListOfPlace(vector<Place> placeList, JNIE
 
     jobject arrayList = env->NewObject(arrayListClass, arrayListConstructor);
 
-    for (Place &place : placeList)
+    for (auto &place : placeList)
     {
         env->CallObjectMethod(arrayList, addToArrayList, createPlace(place, env));
     }
@@ -39,7 +39,7 @@ jobject CppToJavaConverter::createArrayListOfPlace(vector<Place> placeList, JNIE
     return arrayList;
 }
 
-jobject CppToJavaConverter::createArrayListOfPath(vector<Path> pathList, JNIEnv *env)
+jobject CppToJavaConverter::createArrayListOfPath(vector<shared_ptr<Path>> pathList, JNIEnv *env)
 {
     jclass arrayListClass = env->FindClass("java/util/ArrayList");
     jmethodID arrayListConstructor = env->GetMethodID(arrayListClass, "<init>", "()V");
@@ -47,7 +47,7 @@ jobject CppToJavaConverter::createArrayListOfPath(vector<Path> pathList, JNIEnv 
 
     jobject arrayList = env->NewObject(arrayListClass, arrayListConstructor);
 
-    for (Path &path : pathList)
+    for (auto path : pathList)
     {
         env->CallObjectMethod(arrayList, addToArrayList, createPath(path, env));
     }
