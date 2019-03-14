@@ -9,7 +9,7 @@ import fr.mim.cl.server.model.Place;
 public interface DirectionService
 {
   List<Path> getShortestPath(long startId, long endIdp);
-  List<Path> getTravelingSalesMan(Set<Integer> places);
+  List<Path> getTravelingSalesMan(Set<Long> places);
   Place getNearestPoint(double lat, double lon);
   List<Place> searchPlacesByName(String name);
 }

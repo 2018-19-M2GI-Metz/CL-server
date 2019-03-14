@@ -42,7 +42,7 @@ public class DirectionController
   @ApiOperation(value = "Do the tsp", nickname = "TSP", tags={ "MapAPI" })
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success") })
-  public List<Path> getTravelingSalesMan(@RequestParam("id")  List<Integer> idPlaces)
+  public List<Path> getTravelingSalesMan(@RequestParam("id")  List<Long> idPlaces)
   {
     logger.info("Ids = {}", idPlaces);
     return directionService.getTravelingSalesMan(Collections.emptySet());

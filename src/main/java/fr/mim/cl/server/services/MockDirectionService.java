@@ -36,7 +36,7 @@ public class MockDirectionService implements DirectionService {
     }
 
     @Override
-    public List<Path> getTravelingSalesMan(Set<Integer> places) {
+    public List<Path> getTravelingSalesMan(Set<Long> places) {
         logger.info("Mocking getTsp");
 
         List<Path> res = new ArrayList<>();
