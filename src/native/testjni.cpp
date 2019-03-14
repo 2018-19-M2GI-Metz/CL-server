@@ -12,8 +12,9 @@
  */
 JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getNearestPoint(JNIEnv *env, jobject, jdouble lat, jdouble lon)
 {
-  /* Place place = Place(1, "Metz", lat, lon);
-  return CppToJavaConverter::createPlace(place, env); */
+  auto res = searchNearestPlace(lat, lon);
+  
+  return CppToJavaConverter::createPlace(res, env);
 }
 
 /*
@@ -52,16 +53,9 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
   return CppToJavaConverter::createArrayListOfPath(pathList, env); */
 }
 
-JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_searchPlacesByName(JNIEnv *env, jobject, jstring)
+JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_searchPlacesByName(JNIEnv *env, jobject, jstring query)
 {
-  /* Place place1 = Place(1, "Metz", 10, 20);
-  Place place2 = Place(1, "Nancy", 10, 30);
-
-  std::vector<Place> placeList;
-  placeList.push_back(place1);
-  placeList.push_back(place2); */
-
-  auto placeVector = searchPlace("Metz");
+  auto placeVector = searchPlace(env->GetStringUTFChars(query, 0));
 
   return CppToJavaConverter::createArrayListOfPlace(placeVector, env);
 }
