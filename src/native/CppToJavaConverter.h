@@ -3,11 +3,13 @@
 #include <jni.h>
 #include <iostream>
 #include <vector>
+#include <memory>
+
 /* #include "core/Path.h"
 #include "core/Place.h" */
 #include "../../core/src/core/Models/Point.hpp"
 #include "../../core/src/core/Models/Path.hpp"
-#include <memory>
+
 
 using namespace std;
 
