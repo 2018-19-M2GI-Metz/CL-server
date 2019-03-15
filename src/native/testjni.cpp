@@ -22,7 +22,7 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
  * Method:    getTravelingSalesMan
  * Signature: (Ljava/util/Set;)Ljava/util/List;
  */
-JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getShortestPath(JNIEnv *env, jobject, jlong, jlong)
+JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_getShortestPath(JNIEnv *env, jobject, jlong depart, jlong arrive)
 {
 /*   Place place1 = Place(1, "test", 10, 20);
   Place place2 = Place(1, "test 2", 10, 30);
@@ -33,6 +33,10 @@ JNIEXPORT jobject JNICALL Java_fr_mim_cl_server_services_JniDirectionService_get
   pathList.push_back(path);
 
   return CppToJavaConverter::createArrayListOfPath(pathList, env); */
+
+  auto res = searchShortest(depart, arrive);
+  auto segments = res->getSegments();
+  return CppToJavaConverter::createArrayListOfPath(segments, env);
 }
 
 /*
